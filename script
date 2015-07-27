@@ -1,0 +1,35 @@
+########## Python 2.7 #############
+import httplib, urllib, base64, urllib.error, traceback, json
+ 
+headers = {
+    # requesting the headers
+    
+}
+ 
+params = urllib.urlencode({
+    # given key is used
+    'api_key': 'kfgpmgvfgacx98de9q3xazww',
+})
+ 
+try:
+    conn = httplib.HTTPSConnection('api.wmata.com')
+    conn.request("GET", "/StationPrediction.svc/json/GetPrediction/All?%s" % params, "", headers)
+    response = conn.getresponse()
+    metro = json.load(response)
+    for train in metro:
+        if train['LocationName'] == "Ballston" and train['Line'] == "OR":
+            arrival = str(train["time"])
+            
+    
+            print 'orange line train has arrived and boarding at destination' .formattrain['LocationName']
+            print 'next train  ({}) Train to {}'.format(train['Line'], train['Destination'])
+            print ' next orange line arrives in {} Min'.format(train['time'])
+
+            
+    conn.close()
+
+    
+except Exception as e:
+    print e
+    traceback.print_exc(e)
+ 
